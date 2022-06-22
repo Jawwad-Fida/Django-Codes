@@ -49,7 +49,7 @@ def say_hello(request):
     queryset = TaggedItem.objects.get_tags_for(Product, 1)
 
     """
-    Replace the default manager with a customer manager in Tags\model.py
+    Replace the default manager with a custom manager in Tags\model.py
     """
 
     dic = {'name': 'John', 'products': list(queryset)}
