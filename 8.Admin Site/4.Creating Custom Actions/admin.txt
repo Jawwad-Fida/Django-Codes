@@ -1,0 +1,27 @@
+### Creating Custom Actions
+
+
+#E.g Define a custom action for clearing the inventory of products
+
+
+from django.contrib import messages
+
+class ProductAdmin(admin.ModelAdmin):
+    actions = ['clear_inventory']
+    list_display.....
+    
+    @admin.action(description='Clear Inventory') # this will show in the drop down list
+    # request --> http request,
+    # queryset --> list of objects selected by user
+    def clear_inventory(self, request, queryset):
+        updated_count = queryset.update(inventory=0)
+        # send a message to user (success message)
+       
+        self.message_user(
+            request, f'{updated_count} products were successfully deleted.', messages.SUCCESS
+        )
+
+
+
+
+

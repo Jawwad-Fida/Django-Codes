@@ -1,0 +1,31 @@
+### Providing links to other pages 
+
+
+We will return a string containing an html link
+
+To generate an html link --> from django.utils.html import format_html, urlencode
+
+@admin.display(ordering='products_count') 
+    def products_count(self, collection):
+		# {} will be replaced by the 2nd parameter
+        return format_html('<a href="http://google.com">{}</a>',collection.products_count)
+
+
+# To return urls from admin page, we can't hardcode them because they will change
+# from django.urls import reverse
+reverse('admin:app_model_page')
+        
+# Append a query string for filtering using --> ?
+# to encode a query string --> use urlencode
+# urlencode takes in a dict argument (key-value pairs)
+
+
+    @admin.display(ordering='products_count')  # sort products by their number
+    def products_count(self, collection):
+        url = (
+            reverse('admin:store_product_changelist')
+            + '?'
+            + urlencode({
+                'collection__id': str(collection.id)
+            }))
+        return format_html('<a href="{}">{}</a>', url, collection.products_count)

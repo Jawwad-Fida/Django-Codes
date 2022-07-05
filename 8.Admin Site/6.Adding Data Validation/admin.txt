@@ -1,0 +1,20 @@
+### Adding Data Validation
+
+by default, django has some built in validation for the forms 
+
+We can also edit them and define our own
+
+1) Fields are not-null by default 
+How to make null: description = models.TextField(null=True, blank=True) in modal class
+# null=True for database, blank=True for text field
+(Do remember to migrate --> python manage.py makemigrations, then python manage.py migrate)
+
+2) prevent -1 or 0 to input to price 
+We will use a built in validator in models.py (Google Django validators)
+
+from django.core.validators import MinValueValidator
+
+unit_price = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(1)])
+
+
+

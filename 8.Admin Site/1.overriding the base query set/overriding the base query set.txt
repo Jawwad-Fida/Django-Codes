@@ -1,0 +1,15 @@
+from django.db.models import Count
+
+class CollectionAdmin(admin.ModelAdmin):
+    list_display = ['title', 'products_count']
+    # products_count --> custom field. it does not exist in the model class. So we need to override and annotate
+
+    @admin.display(ordering='products_count')  # sort products by their number
+    def products_count(self, collection):
+        return collection.products_count
+
+    def get_queryset(self, request):
+        # in base class, get_queryset() returns all objects of the model
+        return super().get_queryset(request).annotate(
+            products_count=Count('product')
+        )

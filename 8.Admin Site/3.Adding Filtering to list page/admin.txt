@@ -1,0 +1,32 @@
+### Adding filtering to list page
+
+
+# e.g Filter objects by their collection and last update
+
+class ProductAdmin(admin.ModelAdmin):
+    list_filter = ['collection', 'last_update']
+
+
+
+# Custom filer --> e.g. Products with no inventory
+
+class InventoryFilter(admin.SimpleListFilter):
+    title = 'inventory'  # Will come after By
+    parameter_name = 'inventory'  # will come in url query string ?
+
+    # 2 methods
+
+    # lookup --> display types of filter in the boxes
+    def lookups(self, request, model_admin):
+        # return a list of tuples representing each filter in the box
+        return [('<10', 'Low')]
+        return super().lookups(request, model_admin)
+
+    # query set --> apply filtering logic selected by user
+    def queryset(self, request, queryset: QuerySet):
+        # from django.db.models.query import QuerySet
+        if self.value() == '<10':
+            return queryset.filter(inventory__lt=10)
+
+class ProductAdmin(admin.ModelAdmin):
+    list_filter = ['collection', 'last_update', InventoryFilter]

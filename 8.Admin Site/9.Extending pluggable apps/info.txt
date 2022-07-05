@@ -1,0 +1,16 @@
+### Extending pluggable apps
+
+# A django application/project is made up of apps. These apps are independent of each other. We keep this so because we can use an individual app 
+in a separate app. So we want to build and deploy them independently of each other. 
+
+from tags.models import TaggedItem
+--> However, this line creates a dependency between store and tag app. We want to avoid this
+
+So, we will create another app that we will link to both tag and store app. But these app is customed for our project and may not be used elsewhere
+store_custom app -> tag and store app
+
+First register the new app in INSTALLED_APPS LIST
+
+python manage.py startapp store_custom
+
+store_custom --> admin.py

@@ -1,0 +1,27 @@
+### Using Generic Relations
+
+Show tags in add product section
+
+app--> tags --> admin.py --> register models first 
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    search_fields = ['label']
+
+then use __str__ in model class to show str representation of tag object
+
+store --> admins.py
+
+from django.contrib.contenttypes.admin import GenericTabularInline
+
+# An inline class for Tag
+from tags.models import TaggedItem
+
+class TagInline(GenericTabularInline):
+    autocomplete_fields = ['tag']
+    model = TaggedItem
+
+
+class ProductAdmin(admin.ModelAdmin):
+    # specify how we want to view and edit our products
+    inlines = [TagInline]
