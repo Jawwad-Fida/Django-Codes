@@ -1,0 +1,43 @@
+## Model forms
+
+a model form is a way to create a form based on a particular model
+
+
+path('create-project/', views.createProject, name="create-project"), # in urls.py file
+
+# creating urls to views (using url name)
+<a href="{% url 'create-project' %}">Add Project</a>
+
+<form action="" method="post">
+  <!-- This token ensures that data is clean and not manipulated -->
+  {% csrf_token %} # all forms will have this token
+
+  <!--  Django model forms -->
+  {{form}}
+  <input type="submit" />
+</form>
+
+
+
+1) form.as_p --> p tag with each field
+2) form.title --> show individual field
+
+
+forms.py
+
+# the model that we are creating the form for
+# list of fields that will show on the form.
+# fields = '__all__' --> __all__ is a list of all the fields in the model
+
+from django.forms import ModelForm
+from .models import Project
+
+
+class ProjectForm(ModelForm):
+    class Meta:
+        model = Project
+        fields = ['title', 'featured_image', 'description',
+                  'demo_link', 'source_link']
+
+
+

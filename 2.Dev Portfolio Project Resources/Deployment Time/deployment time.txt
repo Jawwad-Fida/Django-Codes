@@ -1,0 +1,27 @@
+when uploading django files to live server, django will not take the static files. So we need to configure this:
+(we will use it later before deployment)
+
+
+settings.py
+DEBUG=FALSE
+ALLOWED_HOSTS = ['localhost','127.0.0.1']
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+urls.py
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+Then run,
+python manage.py collectstatic
+again: python manage.py collectstatic
+Then yes
+
+all static files will be bundled up into another folder
+
+then install django whitenoise
+
+pip install whitenoise
+then add a line in middleware in settings.py (copy from documentation)
